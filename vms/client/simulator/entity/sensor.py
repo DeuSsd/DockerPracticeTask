@@ -115,3 +115,11 @@ class AccelerometerSensor(Sensor):
 
     def simulate_process(self):
         self.value = random.random() if random.random() > 0.5 else 0
+
+
+sensors_dict = {
+    "temperature_sensor": TemperatureSensor,
+    "pressure_sensor": PressureSensor,
+    "light_sensor": LightSensor,
+    "accelerometer_sensor": AccelerometerSensor
+}
