@@ -1,54 +1,117 @@
+from abc import ABC, abstractmethod
+import datetime
+import math
 import random
 
 
-class Sensor:
-    value: float
-    name: str
-    type: str
+class Device(ABC):
+    def __init__(self, device_type: str, device_name: str):
+        self.__device_type = device_type
+        self.__device_name = device_name
 
-    def __init__(self, name):
-        self.name = name
+    @property
+    def device_name(self):
+        return self.__device_name
 
-    def generate_new_value(self):
+    @device_name.getter
+    def device_name(self):
+        return self.__device_name
+
+    @property
+    def device_type(self):
+        return self.__device_type
+
+    @device_type.getter
+    def device_type(self):
+        return self.__device_type
+
+    @abstractmethod
+    def simulate_process(self):
         pass
 
+    @abstractmethod
     def get_data(self):
-        return self.value
+        pass
+
+
+class Sensor(Device, ABC):
+    def __init__(self, sensor_type: str, sensor_name: str):
+        super(Sensor, self).__init__(device_type="sensor", device_name=sensor_name)
+        self.__value: float = 0.0
+        self.__sensor_type: str = sensor_type
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.getter
+    def value(self):
+        self.simulate_process()
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        self.__value = new_value
+
+    @property
+    def sensor_type(self):
+        return self.__sensor_type
+
+    @sensor_type.getter
+    def sensor_type(self):
+        return self.__sensor_type
+
+    def get_data(self):
+        return {
+            "device_type": self.device_type,
+            "sensor_type": self.sensor_type,
+            "name": self.device_name,
+            "value": self.value
+        }
 
     def __str__(self):
-        return {"type": self.type, "name": self.name, "value": self.value}
+        return str(self.get_data())
 
 
-class Temperature(Sensor):
-    step = 25
+class TemperatureSensor(Sensor):
+    def __init__(self, sensor_name: str):
+        super().__init__(sensor_type="temperature_sensor",
+                         sensor_name=sensor_name)
 
-    def __init__(self, name):
-        super().__init__(name)
-        self.type = "temp"
-
-    def generate_new_value(self):
-        self.value = random.random() + self.step
-
-
-class Pressure(Sensor):
-    step = 55
-
-    def __init__(self, name):
-        super().__init__(name)
-        self.type = "pressure"
-
-    def generate_new_value(self):
-        self.value = random.random() + self.step - 56.48 + 25 * 7
+    def simulate_process(self):
+        time_stamp = datetime.datetime.time(datetime.datetime.now())
+        time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        self.value = 4 * math.cos(time_sec * math.pi / 10000) - 10
 
 
-class Current(Sensor):
-    step = 0
+class PressureSensor(Sensor):
+    def __init__(self, sensor_name: str):
+        super().__init__(sensor_type="pressure_sensor",
+                         sensor_name=sensor_name)
 
-    def __init__(self, name):
-        super().__init__(name)
-        self.type = "current"
+    def simulate_process(self):
+        time_stamp = datetime.datetime.time(datetime.datetime.now())
+        time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        self.value = math.sin(time_sec * math.pi / 10000) \
+                     - 10 * math.cos(time_sec * math.pi / 10000) \
+                     + 10 * math.cos(3 * time_sec * math.pi / 10000)
 
-    def generate_new_value(self):
-        import math
-        self.value = math.sin(self.step)
-        self.step = self.step + 1
+
+class LightSensor(Sensor):
+    def __init__(self, sensor_name: str):
+        super().__init__(sensor_type="light_sensor",
+                         sensor_name=sensor_name)
+
+    def simulate_process(self):
+        time_stamp = datetime.datetime.time(datetime.datetime.now())
+        time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        self.value = math.sin(time_sec * math.pi / 20000)
+
+
+class AccelerometerSensor(Sensor):
+    def __init__(self, sensor_name: str):
+        super().__init__(sensor_type="accelerometer_sensor",
+                         sensor_name=sensor_name)
+
+    def simulate_process(self):
+        self.value = random.random() if random.random() > 0.5 else 0
