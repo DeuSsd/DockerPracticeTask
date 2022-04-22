@@ -3,6 +3,8 @@ import datetime
 import math
 import random
 
+ACCELERATE = 20  # Accelerate processes in k times
+
 
 class Device(ABC):
     def __init__(self, device_type: str, device_name: str):
@@ -62,12 +64,13 @@ class Sensor(Device, ABC):
         return self.__sensor_type
 
     def get_data(self):
-        return {
-            "device_type": self.device_type,
-            "sensor_type": self.sensor_type,
-            "name": self.device_name,
-            "value": self.value
-        }
+        # return {
+        #     "device_type": self.device_type,
+        #     "sensor_type": self.sensor_type,
+        #     "name": self.device_name,
+        #     "value": self.value
+        # }
+        return self.value
 
     def __str__(self):
         return str(self.get_data())
@@ -81,6 +84,7 @@ class TemperatureSensor(Sensor):
     def simulate_process(self):
         time_stamp = datetime.datetime.time(datetime.datetime.now())
         time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        time_sec *= ACCELERATE
         self.value = 4 * math.cos(time_sec * math.pi / 10000) - 10
 
 
@@ -92,6 +96,7 @@ class PressureSensor(Sensor):
     def simulate_process(self):
         time_stamp = datetime.datetime.time(datetime.datetime.now())
         time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        time_sec *= ACCELERATE
         self.value = math.sin(time_sec * math.pi / 10000) \
                      - 10 * math.cos(time_sec * math.pi / 10000) \
                      + 10 * math.cos(3 * time_sec * math.pi / 10000)
@@ -105,6 +110,7 @@ class LightSensor(Sensor):
     def simulate_process(self):
         time_stamp = datetime.datetime.time(datetime.datetime.now())
         time_sec = 24 * time_stamp.hour + 60 * time_stamp.minute + time_stamp.second
+        time_sec *= ACCELERATE
         self.value = math.sin(time_sec * math.pi / 20000)
 
 
