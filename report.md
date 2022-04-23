@@ -239,6 +239,7 @@ $ sudo iptables -A INPUT -i enp0s9 -p tcp --syn --dport 1883 -m conntrack --ctst
 
 ![](./assets/Screenshots/Screenshot_28.png)
 
+Cохраним правила
 
 ```shell
 $ sudo su
