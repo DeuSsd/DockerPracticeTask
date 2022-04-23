@@ -24,14 +24,15 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
+  "iteration": 1650703259489,
   "links": [],
   "liveNow": true,
   "panels": [
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "blgjLFwnz"
+        "uid": "JWDaScw7k"
       },
       "description": "",
       "fieldConfig": {
@@ -52,13 +53,16 @@
               "viz": false
             },
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
-            "spanNulls": false,
+            "showPoints": "always",
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "normal"
@@ -112,9 +116,22 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "blgjLFwnz"
+            "uid": "JWDaScw7k"
           },
-          "groupBy": [],
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
           "measurement": "mqtt_consumer",
           "orderByTime": "ASC",
           "policy": "default",
@@ -127,6 +144,10 @@
                   "value"
                 ],
                 "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
               }
             ]
           ],
@@ -145,7 +166,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "blgjLFwnz"
+        "uid": "JWDaScw7k"
       },
       "fieldConfig": {
         "defaults": {
@@ -223,7 +244,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "blgjLFwnz"
+            "uid": "JWDaScw7k"
           },
           "groupBy": [],
           "measurement": "mqtt_consumer",
@@ -256,7 +277,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "blgjLFwnz"
+        "uid": "JWDaScw7k"
       },
       "fieldConfig": {
         "defaults": {
@@ -299,12 +320,12 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "8.5.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "blgjLFwnz"
+            "uid": "JWDaScw7k"
           },
           "groupBy": [],
           "measurement": "mqtt_consumer",
@@ -337,7 +358,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "blgjLFwnz"
+        "uid": "JWDaScw7k"
       },
       "fieldConfig": {
         "defaults": {
@@ -349,7 +370,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 51,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -412,7 +433,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "blgjLFwnz"
+            "uid": "JWDaScw7k"
           },
           "groupBy": [],
           "measurement": "mqtt_consumer",
@@ -445,7 +466,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "blgjLFwnz"
+        "uid": "JWDaScw7k"
       },
       "fieldConfig": {
         "defaults": {
@@ -520,7 +541,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "blgjLFwnz"
+            "uid": "JWDaScw7k"
           },
           "groupBy": [],
           "measurement": "mqtt_consumer",
@@ -558,7 +579,16 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -575,8 +605,8 @@
     ]
   },
   "time": {
-    "from": "2022-04-22T17:55:08.465Z",
-    "to": "2022-04-22T17:58:20.537Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -595,6 +625,6 @@
   "timezone": "",
   "title": "Figures",
   "uid": "lOKbjKQnk",
-  "version": 3,
+  "version": 2,
   "weekStart": ""
 }
