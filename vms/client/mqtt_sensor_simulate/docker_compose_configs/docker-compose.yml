@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  temperature_sensor:
+    image: quteas/mqtt-sensor-simulator
+    environment:
+      - SIM_PORT=${ENV_PORT}
+      - SIM_HOST=${ENV_HOST}
+      - SIM_NAME=temperature_sensor_001
+      - SIM_PERIOD=5
+      - SIM_TYPE=temperature_sensor
+  pressure_sensor:
+    image: quteas/mqtt-sensor-simulator
+    environment:
+      - SIM_PORT=${ENV_PORT}
+      - SIM_HOST=${ENV_HOST}
+      - SIM_NAME=pressure_sensor_001
+      - SIM_PERIOD=10
+      - SIM_TYPE=pressure_sensor
+  light_sensor:
+    image: quteas/mqtt-sensor-simulator
+    environment:
+      - SIM_PORT=${ENV_PORT}
+      - SIM_HOST=${ENV_HOST}
+      - SIM_NAME=light_sensor_001
+      - SIM_PERIOD=1
+      - SIM_TYPE=light_sensor
+  accelerometer_sensor:
+    image: quteas/mqtt-sensor-simulator
+    environment:
+      - SIM_PORT=${ENV_PORT}
+      - SIM_HOST=${ENV_HOST}
+      - SIM_NAME=accelerometer_sensor_001
+      - SIM_PERIOD=1
+      - SIM_TYPE=accelerometer_sensor
